@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "615083918846",
+    "project_id": "flutbloc",
+    "storage_bucket": "flutbloc.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:615083918846:android:8aae3aad4f108a7ec1ecaf",
+        "android_client_info": {
+          "package_name": "com.example.blocbase"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "615083918846-64s7ts9m5n3m0gljsaj18ds3dtdqsdq0.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.blocbase",
+            "certificate_hash": "8b2997c0d65d1d7fecb038008c558392152830d4"
+          }
+        },
+        {
+          "client_id": "615083918846-h1hcfl5vfjlcoalb9grl73cktongqbqv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCuB6FutEU7rzIffVIY2KwiHBkJBIGuTsU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "615083918846-h1hcfl5vfjlcoalb9grl73cktongqbqv.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
