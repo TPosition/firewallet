@@ -4,7 +4,7 @@
 
 import 'dart:async';
 
-import 'package:transactions_repository/Transactions_repository.dart';
+import 'package:transactions_repository/transactions_repository.dart';
 
 abstract class TransactionsRepository {
   Future<void> addNewTransaction(Transaction Transaction);
