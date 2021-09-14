@@ -1,7 +1,7 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter_firebase_login/app/app.dart';
+import 'package:flutter_firebase_login/auth_select/auth_select.dart';
 import 'package:flutter_firebase_login/home/home.dart';
-import 'package:flutter_firebase_login/login/login.dart';
 
 List<Page> onGenerateAppViewPages(AppStatus state, List<Page<dynamic>> pages) {
   switch (state) {
@@ -9,6 +9,6 @@ List<Page> onGenerateAppViewPages(AppStatus state, List<Page<dynamic>> pages) {
       return [HomePage.page()];
     case AppStatus.unauthenticated:
     default:
-      return [LoginPage.page()];
+      return [AuthSelect.page()];
   }
 }
