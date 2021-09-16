@@ -3,6 +3,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_firebase_login/app/app.dart';
 import 'package:flutter_firebase_login/auth_select/auth_select.dart';
 import 'package:flutter_firebase_login/home/home.dart';
+import 'package:flutter_firebase_login/profile/view/profile_page.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 List<Page> onGenerateAppViewPages(AppStatus state, List<Page<dynamic>> pages) {
@@ -30,7 +31,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
   final List<Widget> _widgetOptions = [
     const HomePage(),
     const HomePage(),
-    const HomePage()
+    const ProfilePage()
   ];
 
   @override
