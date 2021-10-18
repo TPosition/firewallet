@@ -19,14 +19,21 @@ class User {
     required this.photoURL,
   });
 
-  // User copyWith({bool? complete, String? note, String? task}) {
-  //   return User(
-  //     id: id,
-  //     task: task ?? this.task,
-  //     complete: complete ?? this.complete,
-  //     note: note ?? this.note,
-  //   );
-  // }
+  User copyWith(
+      {double? balance,
+      String? displayName,
+      String? email,
+      String? mobile,
+      String? photoURL}) {
+    return User(
+      uid: this.uid,
+      balance: balance ?? this.balance,
+      displayName: displayName ?? this.displayName,
+      email: email ?? this.email,
+      mobile: mobile ?? this.mobile,
+      photoURL: photoURL ?? this.photoURL,
+    );
+  }
 
   @override
   int get hashCode {

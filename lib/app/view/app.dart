@@ -5,7 +5,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_firebase_login/app/app.dart';
 import 'package:flutter_firebase_login/home/home.dart';
 import 'package:flutter_firebase_login/theme.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'package:flutter_firebase_login/users/bloc/users_bloc.dart';
+import 'package:users_repository/users_repository.dart';
 
 class App extends StatelessWidget {
   const App({
@@ -20,10 +21,18 @@ class App extends StatelessWidget {
   Widget build(BuildContext context) {
     return RepositoryProvider.value(
       value: _authenticationRepository,
-      child: BlocProvider(
-        create: (_) => AppBloc(
-          authenticationRepository: _authenticationRepository,
-        ),
+      child: MultiBlocProvider(
+        providers: [
+          BlocProvider(
+            create: (_) => AppBloc(
+              authenticationRepository: _authenticationRepository,
+            ),
+          ),
+          BlocProvider<UsersBloc>(
+              create: (context) => UsersBloc(
+                    usersRepository: FirebaseUsersRepository(),
+                  )..add(LoadUsers())),
+        ],
         child: const AppView(),
       ),
     );

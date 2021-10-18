@@ -13,7 +13,9 @@ class FirebaseUsersRepository implements UsersRepository {
 
   @override
   Future<void> addNewUser(User user) {
-    return userCollection.doc(user.uid).set((user.toEntity().toDocument()));
+    return userCollection
+        .doc(user.uid)
+        .set(user.toEntity().toDocument(), fs.SetOptions(merge: true));
   }
 
   @override
@@ -22,7 +24,7 @@ class FirebaseUsersRepository implements UsersRepository {
   }
 
   @override
-  Stream<List<User>> Users() {
+  Stream<List<User>> users() {
     return userCollection.snapshots().map((snapshot) {
       return snapshot.docs
           .map((doc) => User.fromEntity(UserEntity.fromSnapshot(doc)))

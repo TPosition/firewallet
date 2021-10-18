@@ -11,7 +11,7 @@ abstract class UsersRepository {
 
   Future<void> deleteUser(User user);
 
-  Stream<List<User>> Users();
+  Stream<List<User>> users();
 
   Future<void> updateUser(User user);
 }
