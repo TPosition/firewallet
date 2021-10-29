@@ -1,8 +1,18 @@
+import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
 import '../entities/entities.dart';
 
 @immutable
-class User {
+class User extends Equatable {
+  const User({
+    required final this.uid,
+    required final this.balance,
+    required final this.displayName,
+    required final this.email,
+    required final this.mobile,
+    required final this.photoURL,
+  });
+
   final String uid;
   final double balance;
   final String displayName;
@@ -10,76 +20,50 @@ class User {
   final String mobile;
   final String photoURL;
 
-  User({
-    required this.uid,
-    required this.balance,
-    required this.displayName,
-    required this.email,
-    required this.mobile,
-    required this.photoURL,
-  });
-
-  User copyWith(
-      {double? balance,
-      String? displayName,
-      String? email,
-      String? mobile,
-      String? photoURL}) {
-    return User(
-      uid: this.uid,
-      balance: balance ?? this.balance,
-      displayName: displayName ?? this.displayName,
-      email: email ?? this.email,
-      mobile: mobile ?? this.mobile,
-      photoURL: photoURL ?? this.photoURL,
-    );
-  }
+  User copyWith({
+    final double? balance,
+    final String? displayName,
+    final String? email,
+    final String? mobile,
+    final String? photoURL,
+  }) =>
+      User(
+        uid: uid,
+        balance: balance ?? this.balance,
+        displayName: displayName ?? this.displayName,
+        email: email ?? this.email,
+        mobile: mobile ?? this.mobile,
+        photoURL: photoURL ?? this.photoURL,
+      );
 
   @override
-  int get hashCode {
-    return uid.hashCode ^
-        balance.hashCode ^
-        displayName.hashCode ^
-        email.hashCode ^
-        mobile.hashCode ^
-        photoURL.hashCode;
-  }
+  String toString() =>
+      'User{uid: $uid,balance: $balance,displayName: $displayName,email: $email,mobile: $mobile,photoURL: $photoURL}';
 
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        other is User &&
-            runtimeType == other.runtimeType &&
-            uid == other.uid &&
-            balance == other.balance &&
-            displayName == other.displayName &&
-            email == other.email &&
-            mobile == other.mobile &&
-            photoURL == other.photoURL;
-  }
-
-  @override
-  String toString() {
-    return 'User{uid: $uid,balance: $balance,displayName: $displayName,email: $email,mobile: $mobile,photoURL: $photoURL}';
-  }
-
-  UserEntity toEntity() {
-    return UserEntity(
+  UserEntity toEntity() => UserEntity(
         uid: uid,
         balance: balance,
         displayName: displayName,
         email: email,
         mobile: mobile,
-        photoURL: photoURL);
-  }
+        photoURL: photoURL,
+      );
 
-  static User fromEntity(UserEntity entity) {
-    return User(
-        uid: entity.uid,
-        balance: entity.balance,
-        displayName: entity.displayName,
-        email: entity.email,
-        mobile: entity.mobile,
-        photoURL: entity.photoURL);
-  }
+  static User fromEntity(final UserEntity entity) => User(
+      uid: entity.uid,
+      balance: entity.balance,
+      displayName: entity.displayName,
+      email: entity.email,
+      mobile: entity.mobile,
+      photoURL: entity.photoURL);
+
+  @override
+  List<Object?> get props => [
+        uid,
+        balance,
+        displayName,
+        email,
+        mobile,
+        photoURL,
+      ];
 }

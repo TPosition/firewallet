@@ -1,17 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_firebase_login/app/app.dart';
-import 'package:flutter_firebase_login/home/home.dart';
+import 'package:flutter_firebase_login/common/common.dart';
 
 class HomePage extends StatelessWidget {
-  const HomePage({Key? key}) : super(key: key);
+  const HomePage({final Key? key}) : super(key: key);
 
   static Page page() => const MaterialPage<void>(child: HomePage());
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(final BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
-    final user = context.select((AppBloc bloc) => bloc.state.user);
+    final user = context.select((final AppBloc bloc) => bloc.state.user);
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Home'),

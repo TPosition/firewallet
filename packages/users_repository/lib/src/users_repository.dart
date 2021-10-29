@@ -7,11 +7,13 @@ import 'dart:async';
 import 'package:users_repository/users_repository.dart';
 
 abstract class UsersRepository {
-  Future<void> addNewUser(User user);
+  Future<void> addNewUser(final User user);
 
-  Future<void> deleteUser(User user);
+  Future<void> deleteUser(final User user);
 
   Stream<List<User>> users();
 
-  Future<void> updateUser(User user);
+  Future<void> updateUser(final User user);
+
+  Stream<User> currentUser(final String uid);
 }

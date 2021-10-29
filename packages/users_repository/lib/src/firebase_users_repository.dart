@@ -5,35 +5,44 @@
 import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart' as fs;
-import 'package:users_repository/users_repository.dart';
+import '../users_repository.dart';
 import 'entities/entities.dart';
 
 class FirebaseUsersRepository implements UsersRepository {
-  final userCollection = fs.FirebaseFirestore.instance.collection('user');
+  final fs.CollectionReference userCollection =
+      fs.FirebaseFirestore.instance.collection('user');
 
   @override
-  Future<void> addNewUser(User user) {
-    return userCollection
-        .doc(user.uid)
-        .set(user.toEntity().toDocument(), fs.SetOptions(merge: true));
-  }
+  Future<void> addNewUser(final User user) =>
+      userCollection.doc(user.uid).set(user.toEntity().toDocument());
 
   @override
-  Future<void> deleteUser(User user) async {
-    return userCollection.doc(user.uid).delete();
-  }
+  Future<void> deleteUser(final User user) async =>
+      userCollection.doc(user.uid).delete();
 
   @override
-  Stream<List<User>> users() {
-    return userCollection.snapshots().map((snapshot) {
-      return snapshot.docs
-          .map((doc) => User.fromEntity(UserEntity.fromSnapshot(doc)))
-          .toList();
-    });
-  }
+  Stream<List<User>> users() => userCollection.snapshots().map(
+        (final snapshot) => snapshot.docs
+            .map((final doc) => User.fromEntity(UserEntity.fromSnapshot(doc)))
+            .toList(),
+      );
 
   @override
-  Future<void> updateUser(User user) {
-    return userCollection.doc(user.uid).update(user.toEntity().toDocument());
-  }
+  Future<void> updateUser(final User user) =>
+      userCollection.doc(user.uid).update(user.toEntity().toDocument());
+
+  @override
+  Stream<User> currentUser(final String uid) =>
+      userCollection.doc(uid).snapshots().map((final doc) {
+        if (doc.exists) {
+          return User.fromEntity(UserEntity.fromSnapshot(doc));
+        }
+        return const User(
+            uid: "",
+            balance: 0,
+            displayName: "",
+            email: "",
+            mobile: "",
+            photoURL: "");
+      });
 }
