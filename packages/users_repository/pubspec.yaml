@@ -14,3 +14,6 @@ dependencies:
   equatable: ^2.0.0
   firebase_core: ^1.0.3
   uuid: ^3.0.4
+
+dev_dependencies:
+  flutter_lints: ^1.0.0
