@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_firebase_login/app/app.dart';
 import 'package:flutter_firebase_login/common/common.dart';
 import 'package:flutter_firebase_login/current_user/bloc/current_user_bloc.dart';
+import 'package:flutter_firebase_login/topup/view/topup_page.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:users_repository/users_repository.dart';
 
@@ -89,7 +91,9 @@ class HomePage extends StatelessWidget {
           IconButton(
             icon: const Icon(Icons.logout),
             color: Theme.of(context).iconTheme.color,
-            onPressed: () {},
+            onPressed: () {
+              context.read<AppBloc>().add(AppLogoutRequested());
+            },
           ),
         ],
       );
@@ -242,7 +246,8 @@ class HomePage extends StatelessWidget {
                 SizedBox(
                   width: 85,
                   child: RaisedButton(
-                    onPressed: () {},
+                    onPressed: () =>
+                        Navigator.of(context).push(TopupPage.route()),
                     color: LightColor.navyBlue1,
                     padding:
                         const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
