@@ -2,16 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_firebase_login/app/app.dart';
 import 'package:flutter_firebase_login/common/common.dart';
+import 'package:flutter_firebase_login/current_user/bloc/current_user_bloc.dart';
 import 'package:flutter_firebase_login/users/bloc/users_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:users_repository/users_repository.dart';
 
 class ProfilePage extends StatelessWidget {
-  const ProfilePage({Key? key}) : super(key: key);
+  const ProfilePage({final Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    final auth = context.select((AppBloc bloc) => bloc.state.user);
+  Widget build(final BuildContext context) {
+    final user =
+        context.select((final CurrentUserBloc bloc) => bloc.state.user);
     return Scaffold(
         resizeToAvoidBottomInset: true,
         body: Container(
@@ -19,14 +21,12 @@ class ProfilePage extends StatelessWidget {
           child: ListView(
             children: <Widget>[
               BlocBuilder<UsersBloc, UsersState>(
-                builder: (context, state) {
+                builder: (final context, final state) {
                   if (state is UsersLoaded) {
-                    final user =
-                        state.users.firstWhere((user) => user.uid == auth.id);
                     return Column(
                       children: <Widget>[
                         Container(
-                          height: 150.0,
+                          height: 150,
                           color: Colors.white,
                           child: Column(
                             children: <Widget>[
@@ -38,10 +38,9 @@ class ProfilePage extends StatelessWidget {
                         Container(
                           color: const Color(0xffFFFFFF),
                           child: Padding(
-                            padding: const EdgeInsets.only(bottom: 25.0),
+                            padding: const EdgeInsets.only(bottom: 25),
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisAlignment: MainAxisAlignment.start,
                               children: <Widget>[
                                 const _InfoTitle(),
                                 const SizedBox(
@@ -67,22 +66,7 @@ class ProfilePage extends StatelessWidget {
                                 const SizedBox(
                                   height: 15,
                                 ),
-                                Padding(
-                                    padding: const EdgeInsets.only(
-                                        left: 25.0, right: 25.0, top: 2.0),
-                                    child: Row(
-                                      mainAxisSize: MainAxisSize.max,
-                                      children: const <Widget>[
-                                        // Flexible(
-                                        //   child: Text(
-                                        //     _mobile ?? "Loading",
-                                        //     style: GoogleFonts.roboto(
-                                        //       fontSize: 18.0,
-                                        //     ),
-                                        //   ),
-                                        // ),
-                                      ],
-                                    )),
+                                _InfoUserMobile(user: user),
                               ],
                             ),
                           ),
@@ -100,223 +84,229 @@ class ProfilePage extends StatelessWidget {
   }
 }
 
-class _InfoMobile extends StatelessWidget {
-  const _InfoMobile({
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-        padding: const EdgeInsets.only(left: 25.0, right: 25.0, top: 25.0),
-        child: Row(
-          mainAxisSize: MainAxisSize.max,
-          children: <Widget>[
-            Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              mainAxisSize: MainAxisSize.min,
-              children: <Widget>[
-                Text(
-                  'Mobile',
-                  style: GoogleFonts.roboto(
-                      fontSize: 18.0, fontWeight: FontWeight.bold),
-                ),
-              ],
-            ),
-          ],
-        ));
-  }
-}
-
-class _InfoUserEmail extends StatelessWidget {
-  const _InfoUserEmail({
-    Key? key,
-    required this.user,
+class _InfoUserMobile extends StatelessWidget {
+  const _InfoUserMobile({
+    required final this.user,
+    final Key? key,
   }) : super(key: key);
 
   final User user;
 
   @override
-  Widget build(BuildContext context) {
-    return Padding(
-        padding: const EdgeInsets.only(left: 25.0, right: 25.0, top: 2.0),
-        child: Row(
-          mainAxisSize: MainAxisSize.max,
-          children: <Widget>[
-            Flexible(
-              child: Text(
-                user.email,
-                style: GoogleFonts.roboto(
-                  fontSize: 18.0,
-                ),
+  Widget build(final BuildContext context) => Padding(
+      padding: const EdgeInsets.only(
+        left: 25,
+        right: 25,
+        top: 2,
+      ),
+      child: Row(
+        children: <Widget>[
+          Flexible(
+            child: Text(
+              user.mobile,
+              style: GoogleFonts.roboto(
+                fontSize: 18,
               ),
             ),
-          ],
-        ));
-  }
+          ),
+        ],
+      ));
+}
+
+class _InfoMobile extends StatelessWidget {
+  const _InfoMobile({
+    final Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(final BuildContext context) => Padding(
+      padding: const EdgeInsets.only(left: 25, right: 25, top: 25),
+      child: Row(
+        children: <Widget>[
+          Column(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              Text(
+                'Mobile',
+                style: GoogleFonts.roboto(
+                    fontSize: 18, fontWeight: FontWeight.bold),
+              ),
+            ],
+          ),
+        ],
+      ));
+}
+
+class _InfoUserEmail extends StatelessWidget {
+  const _InfoUserEmail({
+    required final this.user,
+    final Key? key,
+  }) : super(key: key);
+
+  final User user;
+
+  @override
+  Widget build(final BuildContext context) => Padding(
+      padding: const EdgeInsets.only(left: 25, right: 25, top: 2),
+      child: Row(
+        children: <Widget>[
+          Flexible(
+            child: Text(
+              user.email,
+              style: GoogleFonts.roboto(
+                fontSize: 18,
+              ),
+            ),
+          ),
+        ],
+      ));
 }
 
 class _InfoEmail extends StatelessWidget {
   const _InfoEmail({
-    Key? key,
+    final Key? key,
   }) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    return Padding(
-        padding: const EdgeInsets.only(left: 25.0, right: 25.0, top: 25.0),
+  Widget build(final BuildContext context) => Padding(
+        padding: const EdgeInsets.only(left: 25, right: 25, top: 25),
         child: Row(
-          mainAxisSize: MainAxisSize.max,
           children: <Widget>[
             Column(
-              mainAxisAlignment: MainAxisAlignment.start,
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
                 Text(
                   'Email',
                   style: GoogleFonts.roboto(
-                      fontSize: 18.0, fontWeight: FontWeight.bold),
+                      fontSize: 18, fontWeight: FontWeight.bold),
                 ),
               ],
             ),
           ],
-        ));
-  }
+        ),
+      );
 }
 
 class _InfoUserName extends StatelessWidget {
   const _InfoUserName({
-    Key? key,
-    required this.user,
+    required final this.user,
+    final Key? key,
   }) : super(key: key);
 
   final User user;
 
   @override
-  Widget build(BuildContext context) {
-    return Padding(
-        padding: const EdgeInsets.only(left: 25.0, right: 25.0, top: 2.0),
-        child: Row(
-          mainAxisSize: MainAxisSize.max,
-          children: <Widget>[
-            Flexible(
-              child: Text(
-                user.displayName,
-                style: GoogleFonts.roboto(
-                  fontSize: 18.0,
-                ),
+  Widget build(final BuildContext context) => Padding(
+      padding: const EdgeInsets.only(left: 25, right: 25, top: 2),
+      child: Row(
+        children: <Widget>[
+          Flexible(
+            child: Text(
+              user.displayName,
+              style: GoogleFonts.roboto(
+                fontSize: 18,
               ),
             ),
-          ],
-        ));
-  }
+          ),
+        ],
+      ));
 }
 
 class _InfoName extends StatelessWidget {
   const _InfoName({
-    Key? key,
+    final Key? key,
   }) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    return Padding(
-        padding: const EdgeInsets.only(left: 25.0, right: 25.0, top: 25.0),
-        child: Row(
-          mainAxisSize: MainAxisSize.max,
-          children: <Widget>[
-            Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              mainAxisSize: MainAxisSize.min,
-              children: <Widget>[
-                Text(
-                  'Name',
-                  style: GoogleFonts.roboto(
-                      fontSize: 18.0, fontWeight: FontWeight.bold),
-                ),
-              ],
-            ),
-          ],
-        ));
-  }
+  Widget build(final BuildContext context) => Padding(
+      padding: const EdgeInsets.only(left: 25, right: 25, top: 25),
+      child: Row(
+        children: <Widget>[
+          Column(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              Text(
+                'Name',
+                style: GoogleFonts.roboto(
+                    fontSize: 18, fontWeight: FontWeight.bold),
+              ),
+            ],
+          ),
+        ],
+      ));
 }
 
 class _InfoTitle extends StatelessWidget {
   const _InfoTitle({
-    Key? key,
+    final Key? key,
   }) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    return Padding(
-        padding: const EdgeInsets.only(left: 25.0, right: 25.0, top: 25.0),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          mainAxisSize: MainAxisSize.max,
-          children: <Widget>[
-            Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              mainAxisSize: MainAxisSize.min,
-              children: <Widget>[
-                Text(
-                  'Parsonal Information',
-                  style: GoogleFonts.roboto(
-                      fontSize: 20.0, fontWeight: FontWeight.bold),
-                ),
-              ],
-            ),
-          ],
-        ));
-  }
+  Widget build(final BuildContext context) => Padding(
+      padding: const EdgeInsets.only(left: 25, right: 25, top: 25),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: <Widget>[
+          Column(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              Text(
+                'Parsonal Information',
+                style: GoogleFonts.roboto(
+                    fontSize: 20, fontWeight: FontWeight.bold),
+              ),
+            ],
+          ),
+        ],
+      ));
 }
 
 class _ProfileAvatar extends StatelessWidget {
   const _ProfileAvatar({
-    Key? key,
-    required this.user,
+    required final this.user,
+    final Key? key,
   }) : super(key: key);
 
   final User user;
 
   @override
-  Widget build(BuildContext context) {
-    return Expanded(
-      child: Padding(
-        padding: const EdgeInsets.only(top: 20.0),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Avatar(photo: user.photoURL),
-          ],
+  Widget build(final BuildContext context) => Expanded(
+        child: Padding(
+          padding: const EdgeInsets.only(top: 20),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Avatar(
+                photo: user.photoURL,
+                avatarSize: 48,
+              ),
+            ],
+          ),
         ),
-      ),
-    );
-  }
+      );
 }
 
 class _AppBar extends StatelessWidget {
   const _AppBar({
-    Key? key,
+    final Key? key,
   }) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    return Padding(
-        padding: const EdgeInsets.only(left: 20.0, top: 20.0),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Padding(
-              padding: const EdgeInsets.only(left: 5.0),
-              child: Text(
-                'My Profile',
-                style: GoogleFonts.roboto(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 25.0,
-                    color: Colors.black),
-              ),
-            )
-          ],
-        ));
-  }
+  Widget build(final BuildContext context) => Padding(
+      padding: const EdgeInsets.only(left: 20, top: 20),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Padding(
+            padding: const EdgeInsets.only(left: 5),
+            child: Text(
+              'My Profile',
+              style: GoogleFonts.roboto(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 25,
+                  color: Colors.black),
+            ),
+          )
+        ],
+      ));
 }
