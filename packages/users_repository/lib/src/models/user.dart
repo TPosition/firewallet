@@ -57,6 +57,14 @@ class User extends Equatable {
       mobile: entity.mobile,
       photoURL: entity.photoURL);
 
+  static User empty() => const User(
+      uid: "",
+      balance: 0,
+      displayName: "",
+      email: "",
+      mobile: "",
+      photoURL: "");
+
   @override
   List<Object?> get props => [
         uid,

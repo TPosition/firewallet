@@ -38,11 +38,12 @@ class FirebaseUsersRepository implements UsersRepository {
           return User.fromEntity(UserEntity.fromSnapshot(doc));
         }
         return const User(
-            uid: "",
-            balance: 0,
-            displayName: "",
-            email: "",
-            mobile: "",
-            photoURL: "");
+          uid: "",
+          balance: 0,
+          displayName: "",
+          email: "",
+          mobile: "",
+          photoURL: "",
+        );
       });
 }

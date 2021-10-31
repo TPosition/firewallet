@@ -7,24 +7,30 @@ part 'current_user_event.dart';
 part 'current_user_state.dart';
 
 class CurrentUserBloc extends Bloc<CurrentUserEvent, CurrentUserState> {
-  CurrentUserBloc(
-      {required final UsersRepository usersRepository,
-      required final String uid})
-      : _usersRepository = usersRepository,
+  CurrentUserBloc({
+    required final UsersRepository usersRepository,
+    required final String uid,
+  })  : _usersRepository = usersRepository,
         _uid = uid,
         super(const CurrentUserState.unauthenticated()) {
     on<CurrentUserChanged>(_onUserChanged);
-
+    if (uid.isEmpty) {
+      add(CurrentUserChanged(CurrentUserStatus.unauthenticated, User.empty()));
+      return;
+    }
     _currentUserSubscription =
         _usersRepository.currentUser(_uid).listen((final User currentUser) {
       if (currentUser.uid.isEmpty) {
-        _usersRepository.addNewUser(User(
+        _usersRepository.addNewUser(
+          User(
             uid: _uid,
             balance: 0,
             displayName: "",
             email: "",
             mobile: "",
-            photoURL: ""));
+            photoURL: "",
+          ),
+        );
         add(CurrentUserChanged(CurrentUserStatus.incompleted, currentUser));
       }
 

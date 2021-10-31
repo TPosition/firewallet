@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_firebase_login/app/app.dart';
 import 'package:flutter_firebase_login/current_user/bloc/current_user_bloc.dart';
-import 'package:flutter_firebase_login/home/home.dart';
 import 'package:flutter_firebase_login/theme.dart';
 import 'package:flutter_firebase_login/users/bloc/users_bloc.dart';
 import 'package:users_repository/users_repository.dart';
@@ -35,31 +34,25 @@ class App extends StatelessWidget {
               ),
               BlocProvider<UsersBloc>(
                 create: (final context) => UsersBloc(
-                  usersRepository: FirebaseUsersRepository(),
+                  usersRepository: _usersRepository,
                 )..add(LoadUsers()),
               ),
-              BlocProvider<CurrentUserBloc>(
-                create: (final context) {
-                  final auth =
-                      context.select((final AppBloc bloc) => bloc.state.user);
-                  return CurrentUserBloc(
-                    uid: auth.id,
-                    usersRepository: _usersRepository,
-                  );
-                },
-              )
             ],
-            child: Builder(builder: (final context) {
-              final auth =
-                  context.select((final AppBloc bloc) => bloc.state.user);
-              return BlocProvider(
-                create: (final context) => CurrentUserBloc(
+            child: BlocBuilder<AppBloc, AppState>(
+              builder: (final context, final state) {
+                final auth =
+                    context.select((final AppBloc bloc) => bloc.state.user);
+                final _currentUserBloc = CurrentUserBloc(
                   uid: auth.id,
                   usersRepository: _usersRepository,
-                ),
-                child: const AppView(),
-              );
-            }),
+                );
+
+                return BlocProvider.value(
+                  value: _currentUserBloc,
+                  child: const AppView(),
+                );
+              },
+            ),
           ),
         ),
       );
@@ -100,11 +93,6 @@ class AppView extends StatelessWidget {
         state: _userStatus,
         onGeneratePages: onGenerateAppViewPages,
       ),
-      routes: <String, WidgetBuilder>{
-        '/home': (final _) => const HomePage(),
-        '/history': (final _) => const HomePage(),
-        "/profile": (final _) => const HomePage(),
-      },
     );
   }
 }
