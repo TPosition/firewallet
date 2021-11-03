@@ -61,6 +61,10 @@ class App extends StatelessWidget {
 class AppView extends StatelessWidget {
   const AppView({final Key? key}) : super(key: key);
 
+  static Route route() => MaterialPageRoute<void>(
+        builder: (final _) => const AppView(),
+      );
+
   @override
   Widget build(final BuildContext context) {
     UserStatus _userStatus = UserStatus.appStatusUnauthenticated;

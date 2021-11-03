@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_firebase_login/app/app.dart';
 import 'package:flutter_firebase_login/home/home.dart';
 
 class SuccessPage extends StatelessWidget {
@@ -35,7 +36,7 @@ class SuccessPage extends StatelessWidget {
                   height: 30,
                 ),
                 RaisedButton(
-                  padding: EdgeInsets.all(0),
+                  padding: const EdgeInsets.all(0),
                   elevation: 0,
                   hoverElevation: 0,
                   focusElevation: 0,
@@ -50,7 +51,7 @@ class SuccessPage extends StatelessWidget {
                     ),
                   ),
                   onPressed: () {
-                    Navigator.of(context).push(HomePage.route());
+                    Navigator.of(context).push(AppView.route());
                   },
                 ),
               ],
