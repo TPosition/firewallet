@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_firebase_login/app/app.dart';
-import 'package:flutter_firebase_login/common/common.dart';
+import 'package:flutter_firebase_login/common/widgets/avatar.dart';
 import 'package:flutter_firebase_login/info_update/cubit/info_update_cubit.dart';
 import 'package:formz/formz.dart';
 
@@ -22,7 +22,7 @@ class InfoUpdateForm extends StatelessWidget {
           ScaffoldMessenger.of(context)
             ..hideCurrentSnackBar()
             ..showSnackBar(
-              const SnackBar(content: Text('Sign Up Failure')),
+              const SnackBar(content: Text('Information Update Failure')),
             );
         }
       },

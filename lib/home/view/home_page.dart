@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_firebase_login/app/app.dart';
-import 'package:flutter_firebase_login/common/common.dart';
+import 'package:flutter_firebase_login/common/widgets/avatar.dart';
 import 'package:flutter_firebase_login/current_user/bloc/current_user_bloc.dart';
 import 'package:flutter_firebase_login/topup/view/topup_page.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -11,6 +11,10 @@ class HomePage extends StatelessWidget {
   const HomePage({final Key? key}) : super(key: key);
 
   static Page page() => const MaterialPage<void>(child: HomePage());
+
+  static Route route() => MaterialPageRoute<void>(
+        builder: (final _) => const HomePage(),
+      );
 
   @override
   Widget build(final BuildContext context) {

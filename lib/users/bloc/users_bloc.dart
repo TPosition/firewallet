@@ -16,6 +16,7 @@ class UsersBloc extends Bloc<UsersEvent, UsersState> {
     on<LoadUsers>(_onLoadUsers);
     on<AddUser>(_onAddUser);
     on<UsersUpdated>(_onUsersUpdated);
+    on<UpdateUser>(_onUpdateUser);
   }
 
   Future<void> _onLoadUsers(LoadUsers event, Emitter<UsersState> emit) {
@@ -31,5 +32,9 @@ class UsersBloc extends Bloc<UsersEvent, UsersState> {
 
   void _onUsersUpdated(UsersUpdated event, Emitter<UsersState> emit) {
     emit(UsersLoaded(event.users));
+  }
+
+  void _onUpdateUser(UpdateUser event, Emitter<UsersState> emit) {
+    _usersRepository.updateUser(event.updatedUser);
   }
 }

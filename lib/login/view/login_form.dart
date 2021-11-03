@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_firebase_login/common/common.dart';
+import 'package:flutter_firebase_login/common/widgets/fade_animation.dart';
 import 'package:flutter_firebase_login/login/login.dart';
 import 'package:flutter_firebase_login/sign_up/sign_up.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -203,7 +203,9 @@ class _PasswordInput extends StatelessWidget {
                 border: OutlineInputBorder(
                     borderSide: BorderSide(color: Colors.grey[400]!)),
                 helperText: '',
-                errorText: state.password.invalid ? 'invalid password' : null,
+                errorText: state.password.invalid
+                    ? 'password must contain an uppercase letter, lowercase letter, number and at least 8 characters'
+                    : null,
               ),
             ),
           ],

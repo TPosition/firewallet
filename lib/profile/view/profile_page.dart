@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_firebase_login/app/app.dart';
-import 'package:flutter_firebase_login/common/common.dart';
+import 'package:flutter_firebase_login/common/widgets/avatar.dart';
 import 'package:flutter_firebase_login/current_user/bloc/current_user_bloc.dart';
 import 'package:flutter_firebase_login/users/bloc/users_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
