@@ -4,24 +4,22 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_firebase_login/login/login.dart';
 
 class LoginPage extends StatelessWidget {
-  const LoginPage({Key? key}) : super(key: key);
+  const LoginPage({final Key? key}) : super(key: key);
 
   static Page page() => const MaterialPage<void>(child: LoginPage());
 
-  static Route route() {
-    return MaterialPageRoute<void>(builder: (_) => const LoginPage());
-  }
+  static Route route() =>
+      MaterialPageRoute<void>(builder: (final _) => const LoginPage());
 
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Padding(
-        padding: const EdgeInsets.all(8),
-        child: BlocProvider(
-          create: (_) => LoginCubit(context.read<AuthenticationRepository>()),
-          child: const LoginForm(),
+  Widget build(final BuildContext context) => Scaffold(
+        body: Padding(
+          padding: const EdgeInsets.all(8),
+          child: BlocProvider(
+            create: (final _) =>
+                LoginCubit(context.read<AuthenticationRepository>()),
+            child: const LoginForm(),
+          ),
         ),
-      ),
-    );
-  }
+      );
 }

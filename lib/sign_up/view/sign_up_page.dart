@@ -4,22 +4,20 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_firebase_login/sign_up/sign_up.dart';
 
 class SignUpPage extends StatelessWidget {
-  const SignUpPage({Key? key}) : super(key: key);
+  const SignUpPage({final Key? key}) : super(key: key);
 
-  static Route route() {
-    return MaterialPageRoute<void>(builder: (_) => const SignUpPage());
-  }
+  static Route route() =>
+      MaterialPageRoute<void>(builder: (final _) => const SignUpPage());
 
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Padding(
-        padding: const EdgeInsets.all(8),
-        child: BlocProvider<SignUpCubit>(
-          create: (_) => SignUpCubit(context.read<AuthenticationRepository>()),
-          child: const SignUpForm(),
+  Widget build(final BuildContext context) => Scaffold(
+        body: Padding(
+          padding: const EdgeInsets.all(8),
+          child: BlocProvider<SignUpCubit>(
+            create: (final _) =>
+                SignUpCubit(context.read<AuthenticationRepository>()),
+            child: const SignUpForm(),
+          ),
         ),
-      ),
-    );
-  }
+      );
 }
