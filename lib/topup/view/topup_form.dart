@@ -3,9 +3,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_firebase_login/common/views/success_page.dart';
 import 'package:flutter_firebase_login/current_user/bloc/current_user_bloc.dart';
 import 'package:flutter_firebase_login/topup/cubit/topup_cubit.dart';
+import 'package:flutter_firebase_login/transactions/bloc/transactions_bloc.dart';
+import 'package:flutter_firebase_login/transactions/transaction_category_contant.dart';
 import 'package:flutter_firebase_login/users/bloc/users_bloc.dart';
 import 'package:formz/formz.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:transactions_repository/transactions_repository.dart';
 import 'package:users_repository/users_repository.dart';
 
 class TopupForm extends StatelessWidget {
@@ -24,6 +27,16 @@ class TopupForm extends StatelessWidget {
         if (state.status.isSubmissionSuccess) {
           context.read<UsersBloc>().add(
                 UpdateUser(user.copyWith(balance: user.balance + state.amount)),
+              );
+          context.read<TransactionsBloc>().add(
+                AddTransaction(
+                  Transaction(
+                    amount: state.amount,
+                    category: ktopup,
+                    receiverDisplayName: user.displayName,
+                    receiverUID: user.uid,
+                  ),
+                ),
               );
           Navigator.of(context).push<void>(SuccessPage.route());
         }

@@ -5,20 +5,25 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_firebase_login/app/app.dart';
 import 'package:flutter_firebase_login/current_user/bloc/current_user_bloc.dart';
 import 'package:flutter_firebase_login/theme.dart';
+import 'package:flutter_firebase_login/transactions/bloc/transactions_bloc.dart';
 import 'package:flutter_firebase_login/users/bloc/users_bloc.dart';
+import 'package:transactions_repository/transactions_repository.dart';
 import 'package:users_repository/users_repository.dart';
 
 class App extends StatelessWidget {
   const App({
     required final AuthenticationRepository authenticationRepository,
     required final FirebaseUsersRepository usersRepository,
+    required final FirebaseTransactionsRepository transactionsRepository,
     final Key? key,
   })  : _authenticationRepository = authenticationRepository,
         _usersRepository = usersRepository,
+        _transactionsRepository = transactionsRepository,
         super(key: key);
 
   final AuthenticationRepository _authenticationRepository;
   final FirebaseUsersRepository _usersRepository;
+  final FirebaseTransactionsRepository _transactionsRepository;
 
   @override
   Widget build(final BuildContext context) => RepositoryProvider.value(
@@ -36,6 +41,11 @@ class App extends StatelessWidget {
                 create: (final context) => UsersBloc(
                   usersRepository: _usersRepository,
                 )..add(LoadUsers()),
+              ),
+              BlocProvider<TransactionsBloc>(
+                create: (final context) => TransactionsBloc(
+                  transactionsRepository: _transactionsRepository,
+                )..add(LoadTransactions()),
               ),
             ],
             child: BlocBuilder<AppBloc, AppState>(

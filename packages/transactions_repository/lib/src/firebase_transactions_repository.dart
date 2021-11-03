@@ -25,7 +25,7 @@ class FirebaseTransactionsRepository implements TransactionsRepository {
   }
 
   @override
-  Stream<List<Transaction>> Transactions() {
+  Stream<List<Transaction>> transactions() {
     return transactionCollection.snapshots().map((snapshot) {
       return snapshot.docs
           .map((doc) =>

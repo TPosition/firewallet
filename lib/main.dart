@@ -3,6 +3,7 @@ import 'package:bloc/bloc.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_firebase_login/app/app.dart';
+import 'package:transactions_repository/transactions_repository.dart';
 import 'package:users_repository/users_repository.dart';
 
 Future<void> main() async {
@@ -12,8 +13,10 @@ Future<void> main() async {
   final authenticationRepository = AuthenticationRepository();
   await authenticationRepository.user.first;
   final usersRepository = FirebaseUsersRepository();
+  final transactionsRepository = FirebaseTransactionsRepository();
   runApp(
     App(
+      transactionsRepository: transactionsRepository,
       usersRepository: usersRepository,
       authenticationRepository: authenticationRepository,
     ),

@@ -64,7 +64,7 @@ class TransactionEntity extends Equatable {
       receiverUID: json['receiverUID'] as String,
       senderUID: json['senderUID'] as String,
       senderDisplayName: json['senderDisplayName'] as String,
-      timestamp: json['timestamp'] as DateTime,
+      timestamp: (json['timestamp'] as Timestamp).toDate(),
     );
   }
 
