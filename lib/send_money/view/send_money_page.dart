@@ -35,7 +35,11 @@ class SendMoneyPage extends StatelessWidget {
       create: (final context) => SendMoneyCubit(),
       child: BlocListener<SendMoneyCubit, SendMoneyState>(
         listener: (final context, final state) {
+          print(state.amount);
+          print(receiver.copyWith(balance: receiver.balance + state.amount));
           if (state.status.isSubmissionSuccess) {
+            print(receiver.balance + state.amount);
+            print(user.balance - state.amount);
             context.read<UsersBloc>().add(
                   UpdateUser(
                     receiver.copyWith(balance: receiver.balance + state.amount),
@@ -43,7 +47,7 @@ class SendMoneyPage extends StatelessWidget {
                 );
             context.read<UsersBloc>().add(
                   UpdateUser(
-                    receiver.copyWith(balance: user.balance + state.amount),
+                    user.copyWith(balance: user.balance - state.amount),
                   ),
                 );
             context.read<TransactionsBloc>().add(
@@ -88,7 +92,7 @@ class SendMoneyPage extends StatelessWidget {
                     )),
                 Expanded(
                   child: ListView.builder(
-                    itemCount: 4,
+                    itemCount: 3,
                     itemBuilder:
                         (final BuildContext context, final int index) =>
                             _getSection(index, receiver),
@@ -184,7 +188,7 @@ class SendMoneyPage extends StatelessWidget {
                   child: Row(
                     children: <Widget>[
                       Text(
-                        '\RM',
+                        'RM',
                         style: GoogleFonts.roboto(
                             fontWeight: FontWeight.bold, fontSize: 35),
                       ),
@@ -242,7 +246,7 @@ class _AmountForm extends StatelessWidget {
         context.select((final CurrentUserBloc bloc) => bloc.state.user);
     return BlocBuilder<SendMoneyCubit, SendMoneyState>(
       buildWhen: (final previous, final current) =>
-          previous.amount != current.amount,
+          previous.isEnough != current.isEnough,
       builder: (final context, final state) => TextField(
         key: const Key('SendMoneyPage_AmountForm'),
         onChanged: (final amount) =>
@@ -257,8 +261,7 @@ class _AmountForm extends StatelessWidget {
             fontSize: 25,
           ),
           helperText: '',
-          errorText:
-              state.isEnough ? null : 'You are out of balance, please top up.',
+          errorText: state.isEnough ? null : 'out of balance',
         ),
       ),
     );

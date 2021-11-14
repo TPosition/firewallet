@@ -10,6 +10,7 @@ class SendMoneyCubit extends Cubit<SendMoneyState> {
   void amountChanged(final String value, final double balance) {
     if (value.isNotEmpty) {
       if (balance > double.parse(value)) {
+        print(double.parse(value));
         emit(
           state.copyWith(
             amount: double.parse(value),
@@ -17,13 +18,14 @@ class SendMoneyCubit extends Cubit<SendMoneyState> {
             isEnough: true,
           ),
         );
+      } else {
+        emit(state.copyWith(isEnough: false));
       }
-      emit(state.copyWith(isEnough: false));
     }
   }
 
   void submitOnPress() {
-    if (!state.status.isValidated) return;
+    if (!state.status.isValidated || !state.isEnough) return;
 
     emit(
       state.copyWith(

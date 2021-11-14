@@ -5,6 +5,7 @@ import 'package:flutter_firebase_login/common/widgets/avatar.dart';
 import 'package:flutter_firebase_login/current_user/bloc/current_user_bloc.dart';
 import 'package:flutter_firebase_login/qr/qr_code.dart';
 import 'package:flutter_firebase_login/qr/qr_scanner.dart';
+import 'package:flutter_firebase_login/select_account/view/select_account_page.dart';
 import 'package:flutter_firebase_login/send_money/view/send_money_page.dart';
 import 'package:flutter_firebase_login/topup/view/topup_page.dart';
 import 'package:flutter_firebase_login/users/bloc/users_bloc.dart';
@@ -165,7 +166,7 @@ class HomePage extends StatelessWidget {
                   minWidth: 90,
                   child: RaisedButton(
                     onPressed: () {
-                      Navigator.of(context).push(QRCode.route());
+                      Navigator.of(context).push(SelectAccountPage.route());
                     },
                     padding: const EdgeInsets.symmetric(vertical: 10),
                     color: Colors.white,
