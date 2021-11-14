@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_firebase_login/app/app.dart';
 
-class SuccessPage extends StatelessWidget {
-  const SuccessPage({final Key? key}) : super(key: key);
+class FailurePage extends StatelessWidget {
+  const FailurePage({final Key? key}) : super(key: key);
 
   static Route route() => MaterialPageRoute<void>(
-        builder: (final _) => const SuccessPage(),
+        builder: (final _) => const FailurePage(),
+      );
+
+  static Page page() => const MaterialPage<void>(
+        child: FailurePage(),
       );
 
   @override
@@ -17,14 +21,14 @@ class SuccessPage extends StatelessWidget {
             child: Column(
               children: <Widget>[
                 const Image(
-                    image: AssetImage("assets/ico_success.jpg"),
+                    image: AssetImage("assets/ico_fail.jpg"),
                     width: 100,
                     height: 100),
                 const SizedBox(
                   height: 30,
                 ),
                 const Text(
-                  'Successful!',
+                  'Failure!',
                   style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                 ),
                 const SizedBox(

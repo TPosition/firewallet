@@ -3,7 +3,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_firebase_login/app/app.dart';
 import 'package:flutter_firebase_login/common/widgets/avatar.dart';
 import 'package:flutter_firebase_login/current_user/bloc/current_user_bloc.dart';
+import 'package:flutter_firebase_login/qr/qr_code.dart';
+import 'package:flutter_firebase_login/qr/qr_scanner.dart';
+import 'package:flutter_firebase_login/send_money/view/send_money_page.dart';
 import 'package:flutter_firebase_login/topup/view/topup_page.dart';
+import 'package:flutter_firebase_login/users/bloc/users_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:users_repository/users_repository.dart';
 
@@ -108,18 +112,35 @@ class HomePage extends StatelessWidget {
           Expanded(
             child: Column(
               children: [
-                ButtonTheme(
-                  height: 90,
-                  minWidth: 90,
-                  child: RaisedButton(
-                    onPressed: () {},
-                    padding: const EdgeInsets.symmetric(vertical: 10),
-                    color: Colors.white,
-                    shape: const RoundedRectangleBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(20)),
-                    ),
-                    child: const Icon(Icons.document_scanner_outlined),
-                  ),
+                BlocBuilder<UsersBloc, UsersState>(
+                  builder: (final context, final state) {
+                    if (state is UsersLoaded) {
+                      final users = state.users;
+                      return ButtonTheme(
+                        height: 90,
+                        minWidth: 90,
+                        child: RaisedButton(
+                          onPressed: () async {
+                            final String uid = await qrScan();
+                            if (uid.isNotEmpty) {
+                              final User receiver = users.firstWhere(
+                                (final element) => element.uid == uid,
+                              );
+                              await Navigator.of(context)
+                                  .push(SendMoneyPage.route(receiver));
+                            }
+                          },
+                          padding: const EdgeInsets.symmetric(vertical: 10),
+                          color: Colors.white,
+                          shape: const RoundedRectangleBorder(
+                            borderRadius: BorderRadius.all(Radius.circular(20)),
+                          ),
+                          child: const Icon(Icons.document_scanner_outlined),
+                        ),
+                      );
+                    }
+                    return const CircularProgressIndicator();
+                  },
                 ),
                 Container(
                   margin: const EdgeInsets.only(top: 10),
@@ -143,7 +164,9 @@ class HomePage extends StatelessWidget {
                   height: 90,
                   minWidth: 90,
                   child: RaisedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.of(context).push(QRCode.route());
+                    },
                     padding: const EdgeInsets.symmetric(vertical: 10),
                     color: Colors.white,
                     shape: const RoundedRectangleBorder(
@@ -174,7 +197,9 @@ class HomePage extends StatelessWidget {
                   height: 90,
                   minWidth: 90,
                   child: RaisedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.of(context).push(QRCode.route());
+                    },
                     padding: const EdgeInsets.symmetric(vertical: 10),
                     color: Colors.white,
                     shape: const RoundedRectangleBorder(
