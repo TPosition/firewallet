@@ -1,12 +1,36 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_firebase_login/common/widgets/fade_animation.dart';
 import 'package:flutter_firebase_login/login/login.dart';
 import 'package:flutter_firebase_login/sign_up/sign_up.dart';
 
-class AuthSelect extends StatelessWidget {
+class AuthSelect extends StatefulWidget {
   const AuthSelect({final Key? key}) : super(key: key);
 
   static Page page() => const MaterialPage<void>(child: AuthSelect());
+
+  @override
+  State<AuthSelect> createState() => _AuthSelectState();
+}
+
+class _AuthSelectState extends State<AuthSelect> {
+  @override
+  void initState() {
+    checkInternet();
+    super.initState();
+  }
+
+  Future<void> checkInternet() async {
+    try {
+      final result = await InternetAddress.lookup('google.com');
+      if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {}
+    } on SocketException catch (_) {
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+          duration: Duration(days: 1),
+          content: Text("No Internet Connection!")));
+    }
+  }
 
   @override
   Widget build(final BuildContext context) => Scaffold(
