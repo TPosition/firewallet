@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_firebase_login/history/view/history.dart';
 import 'package:flutter_firebase_login/home/home.dart';
 import 'package:flutter_firebase_login/profile/view/profile_page.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -18,7 +19,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
       color: Colors.black, fontWeight: FontWeight.w500, fontSize: 14);
   final List<Widget> _widgetOptions = [
     const HomePage(),
-    const HomePage(),
+    const HistoryPage(),
     const ProfilePage()
   ];
 

@@ -16,7 +16,6 @@ class SelectAccountState extends Equatable {
       ];
 
   SelectAccountState copyWith({
-    final String? filterInput,
     final List<User>? usersList,
     final List<User?>? filteredUsersList,
   }) =>

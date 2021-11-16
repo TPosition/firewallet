@@ -26,7 +26,10 @@ class FirebaseTransactionsRepository implements TransactionsRepository {
 
   @override
   Stream<List<Transaction>> transactions() {
-    return transactionCollection.snapshots().map((snapshot) {
+    return transactionCollection
+        .orderBy("timestamp", descending: true)
+        .snapshots()
+        .map((snapshot) {
       return snapshot.docs
           .map((doc) =>
               Transaction.fromEntity(TransactionEntity.fromSnapshot(doc)))
