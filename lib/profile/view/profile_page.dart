@@ -41,7 +41,6 @@ class ProfilePage extends StatelessWidget {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: <Widget>[
-                                const _InfoTitle(),
                                 const SizedBox(
                                   height: 10,
                                 ),
@@ -235,31 +234,6 @@ class _InfoName extends StatelessWidget {
       ));
 }
 
-class _InfoTitle extends StatelessWidget {
-  const _InfoTitle({
-    final Key? key,
-  }) : super(key: key);
-
-  @override
-  Widget build(final BuildContext context) => Padding(
-      padding: const EdgeInsets.only(left: 25, right: 25, top: 25),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: <Widget>[
-          Column(
-            mainAxisSize: MainAxisSize.min,
-            children: <Widget>[
-              Text(
-                'Parsonal Information',
-                style: GoogleFonts.roboto(
-                    fontSize: 20, fontWeight: FontWeight.bold),
-              ),
-            ],
-          ),
-        ],
-      ));
-}
-
 class _ProfileAvatar extends StatelessWidget {
   const _ProfileAvatar({
     required final this.user,
@@ -299,7 +273,7 @@ class _AppBar extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.only(left: 5),
             child: Text(
-              'My Profile',
+              'Personal Information',
               style: GoogleFonts.roboto(
                   fontWeight: FontWeight.bold,
                   fontSize: 25,

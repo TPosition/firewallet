@@ -206,6 +206,7 @@ class _PasswordInput extends StatelessWidget {
                 errorText: state.password.invalid
                     ? 'password must contain an uppercase letter, lowercase letter, number and at least 8 characters'
                     : null,
+                errorMaxLines: 5,
               ),
             ),
           ],
